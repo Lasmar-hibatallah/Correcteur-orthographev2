@@ -8,19 +8,33 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonicModule, FormsModule] // Note: On n'a plus besoin de CommonModule grâce au @if/@for
+  imports: [IonicModule, FormsModule]
 })
 export class HomePage {
-  text = '';
+  text: string = '';
   result: any = null;
+  isLoading: boolean = false; // État de chargement
 
   constructor(private http: HttpClient) {}
 
   correctText() {
+    if (!this.text.trim()) return;
+
+    this.isLoading = true;
+    this.result = null;
+
+    // Appel au backend Node.js
     this.http.post('http://localhost:5050/correct', { text: this.text })
       .subscribe({
-        next: (res) => this.result = res,
-        error: (err) => console.error('Erreur lors de la correction', err)
+        next: (res) => {
+          this.result = res;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Erreur Backend:', err);
+          alert("Impossible de contacter le serveur de correction.");
+          this.isLoading = false;
+        }
       });
   }
 }

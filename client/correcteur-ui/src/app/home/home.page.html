@@ -1,35 +1,70 @@
-<ion-content class="bg">
+<ion-content [fullscreen]="true" class="main-content">
+  <div class="background-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
   <div class="container">
+    <header class="hero">
+      <h1 class="gradient-text">Compose-Style AI</h1>
+      <p>L'intelligence artificielle au service de votre plume.</p>
+    </header>
 
-    <div class="hero">
-      <h1>Compose-Style AI</h1>
-      <p>Correcteur orthographique intelligent</p>
-    </div>
-
-    <ion-card class="glass">
+    <div class="glass-card editor-container">
+      <div class="card-header">
+        <ion-icon name="document-text-outline"></ion-icon>
+        <span>Éditeur de texte</span>
+      </div>
+      
       <ion-textarea
         [(ngModel)]="text"
-        placeholder="Écris ton texte ici..."
-        [autoGrow]="true">
+        placeholder="Saisissez ou collez votre texte ici..."
+        [autoGrow]="true"
+        rows="6"
+        class="custom-textarea">
       </ion-textarea>
 
-      <ion-button expand="block" (click)="correctText()">
-        Corriger
-      </ion-button>
-    </ion-card>
+      <div class="action-area">
+        <ion-button expand="block" (click)="correctText()" [disabled]="isLoading" class="btn-correct">
+          @if (isLoading) {
+            <ion-spinner name="crescent"></ion-spinner>
+          } @else {
+            <ion-icon name="sparkles" slot="start"></ion-icon>
+            Analyser le texte
+          }
+        </ion-button>
+      </div>
+    </div>
 
     @if (result) {
-      <ion-card class="glass result">
-        <h3>Résultat</h3>
-
-        @for (err of result.errors; track err) {
-          <div class="error">
-            <p>{{ err.sMessage }}</p>
-            <small>Suggestions : {{ err.aSuggestions?.join(', ') }}</small>
+      <div class="result-container animate__animated animate__fadeInUp">
+        <h3 class="result-title">Analyse terminée</h3>
+        
+        @if (result.errors && result.errors.length > 0) {
+          @for (err of result.errors; track $index) {
+            <div class="glass-card error-card">
+              <div class="error-badge">Faute détectée</div>
+              <p class="error-msg">{{ err.sMessage }}</p>
+              
+              @if (err.aSuggestions && err.aSuggestions.length > 0) {
+                <div class="suggestions-group">
+                  <span class="label">Suggestions :</span>
+                  <div class="chips">
+                    @for (sug of err.aSuggestions; track sug) {
+                      <ion-chip class="sug-chip">{{ sug }}</ion-chip>
+                    }
+                  </div>
+                </div>
+              }
+            </div>
+          }
+        } @else {
+          <div class="glass-card success-card">
+            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+            <p>Félicitations ! Aucune erreur détectée.</p>
           </div>
         }
-      </ion-card>
+      </div>
     }
-
   </div>
 </ion-content>
