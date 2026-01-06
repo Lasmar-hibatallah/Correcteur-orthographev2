@@ -5,10 +5,10 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
-  templateUrl: 'home.page.html',
-  styleUrls: ['home.page.scss'],
+  templateUrl: './home.page.html',
+  styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonicModule, FormsModule] // HttpClientModule n’est pas nécessaire ici
+  imports: [IonicModule, FormsModule] // Note: On n'a plus besoin de CommonModule grâce au @if/@for
 })
 export class HomePage {
   text = '';
@@ -18,6 +18,9 @@ export class HomePage {
 
   correctText() {
     this.http.post('http://localhost:5050/correct', { text: this.text })
-      .subscribe(res => this.result = res);
+      .subscribe({
+        next: (res) => this.result = res,
+        error: (err) => console.error('Erreur lors de la correction', err)
+      });
   }
 }

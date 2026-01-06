@@ -10,7 +10,7 @@
       <ion-textarea
         [(ngModel)]="text"
         placeholder="Écris ton texte ici..."
-        autoGrow="true">
+        [autoGrow]="true">
       </ion-textarea>
 
       <ion-button expand="block" (click)="correctText()">
@@ -18,14 +18,18 @@
       </ion-button>
     </ion-card>
 
-    <ion-card *ngIf="result" class="glass result">
-      <h3>Résultat</h3>
+    @if (result) {
+      <ion-card class="glass result">
+        <h3>Résultat</h3>
 
-      <div *ngFor="let err of result.errors" class="error">
-        <p>{{ err.sMessage }}</p>
-        <small>Suggestions : {{ err.aSuggestions?.join(', ') }}</small>
-      </div>
-    </ion-card>
+        @for (err of result.errors; track err) {
+          <div class="error">
+            <p>{{ err.sMessage }}</p>
+            <small>Suggestions : {{ err.aSuggestions?.join(', ') }}</small>
+          </div>
+        }
+      </ion-card>
+    }
 
   </div>
 </ion-content>
