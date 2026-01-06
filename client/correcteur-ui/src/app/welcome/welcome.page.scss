@@ -1,0 +1,86 @@
+.welcome-content {
+  --background: #0f172a;
+}
+
+.welcome-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  text-align: center;
+}
+
+// L'animation du logo
+.logo-wrapper {
+  margin-bottom: 30px; // Un peu moins d'espace en bas
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .floating-logo {
+    // MODIFIE CES VALEURS ICI
+    width: 120px;          // Taille plus petite
+    max-width: 40vw;       // Ne dépassera jamais 40% de la largeur de l'écran
+    height: auto;          // Garde les proportions
+    
+    filter: drop-shadow(0 8px 12px rgba(59, 130, 246, 0.4));
+    animation: floating 3s ease-in-out infinite;
+  }
+}
+
+// L'animation reste la même, mais avec une amplitude plus douce
+@keyframes floating {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); } // Amplitude réduite pour un petit logo
+  100% { transform: translateY(0px); }
+}
+.app-name {
+  font-size: 3rem;
+  font-weight: 800;
+  color: white;
+  margin: 0;
+  letter-spacing: -1px;
+  
+  span {
+    background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.tagline {
+  color: #94a3b8;
+  font-size: 1.1rem;
+  margin-top: 10px;
+  max-width: 250px;
+}
+
+.btn-start {
+  margin-top: 50px;
+  --background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  --border-radius: 16px;
+  --box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+  width: 200px;
+  height: 56px;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+// Récupération des blobs du design précédent
+.background-blobs {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+  .blob {
+    position: absolute;
+    filter: blur(80px);
+    border-radius: 50%;
+    opacity: 0.3;
+  }
+  .blob-1 { width: 300px; height: 300px; background: #3b82f6; top: -100px; right: -50px; }
+  .blob-2 { width: 250px; height: 250px; background: #8b5cf6; bottom: -50px; left: -50px; }
+}

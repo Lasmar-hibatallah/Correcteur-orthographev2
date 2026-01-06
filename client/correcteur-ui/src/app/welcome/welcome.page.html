@@ -1,0 +1,24 @@
+<ion-content [fullscreen]="true" class="welcome-content">
+  <div class="background-blobs">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
+  <div class="welcome-container">
+    <div class="logo-wrapper">
+      <img src="../../assets/logo.png" alt="TextMind Logo" class="floating-logo">
+    </div>
+
+    <div class="text-content">
+      <h1 class="app-name">Text<span>Mind</span></h1>
+      <p class="tagline">L'IA qui perfectionne votre écriture en un clic.</p>
+    </div>
+
+    <div class="footer-action">
+      <ion-button (click)="goToHome()" class="btn-start" mode="ios">
+        Commencer
+        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+</ion-content>
