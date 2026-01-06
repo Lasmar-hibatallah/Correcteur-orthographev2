@@ -1,2 +1,9 @@
 // For information on how to create your own theme, please refer to:
 // https://ionicframework.com/docs/theming/
+:root {
+  --ion-color-primary: #7c5cff;
+  --ion-color-secondary: #5ad7ff;
+  --ion-color-tertiary: #9d7bff;
+
+  --bg-gradient: linear-gradient(135deg, #7c5cff, #5ad7ff);
+}
