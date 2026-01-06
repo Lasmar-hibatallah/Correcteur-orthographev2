@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Correcteur FR</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Texte à analyser</ion-card-title>
+      <ion-card-subtitle>Test API + affichage des erreurs</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-textarea
+        [(ngModel)]="text"
+        autoGrow="true"
+        placeholder="Écris ou colle ton texte en français…"
+        class="editor"
+      ></ion-textarea>
+      <ion-note color="medium" class="tip">
+          Astuce : pour de meilleurs résultats, commencez votre phrase par une majuscule et terminez-la par un point.
+      </ion-note>
+
+      <div class="actions">
+        <ion-button expand="block" (click)="analyze()" [disabled]="isLoading || !text.trim()">
+          Analyser
+        </ion-button>
+
+        <ion-button expand="block" color="medium" (click)="clear()" [disabled]="isLoading">
+          Effacer
+        </ion-button>
+      </div>
+
+      <div class="status" *ngIf="isLoading">
+        <ion-spinner></ion-spinner>
+        <ion-text>Analyse en cours…</ion-text>
+      </div>
+
+      <ion-text color="danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </ion-text>
+
+      <ion-text color="success" *ngIf="hasAnalyzed && !isLoading && !errorMessage && text.trim() && matches.length === 0">
+         Aucune erreur détectée.
+      </ion-text>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="matches.length > 0">
+    <ion-card-header>
+      <ion-card-title>Erreurs détectées</ion-card-title>
+      <ion-card-subtitle>{{ matches.length }} faute(s)</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item *ngFor="let m of matches">
+          <ion-label class="ion-text-wrap">
+            <p><strong>Message :</strong> {{ m.message }}</p>
+            <p><strong>Contexte :</strong> {{ m.context.text }}</p>
+            <p><strong>Suggestions :</strong>
+              <span *ngIf="m.replacements?.length; else noSug">
+                {{ m.replacements[0]?.value }}
+              </span>
+              <ng-template #noSug>Aucune</ng-template>
+            </p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

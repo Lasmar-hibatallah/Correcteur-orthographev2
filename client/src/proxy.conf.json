@@ -1,0 +1,10 @@
+{
+  "/languagetool": {
+    "target": "https://api.languagetool.org",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/languagetool": ""
+    }
+  }
+}

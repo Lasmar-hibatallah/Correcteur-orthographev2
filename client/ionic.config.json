@@ -1,0 +1,7 @@
+{
+  "name": "correcteur-fr",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
